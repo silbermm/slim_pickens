@@ -5,7 +5,7 @@ qa -> stage, then stage -> prod (subsitute any branch names you want for those).
 
 ## The Problem
 
-I was preforming the same steps for each feature:
+I was performing the same steps for each feature:
 
 * merge my feature to QA
 * validate and test
@@ -25,9 +25,8 @@ Once my Stage PR is merged and tested:
 * create a new branch, then `git cherry-pick` all relevent commits from the `git log`
 * `git push` and create a PR
 
-Once I got into this rhytme, it felt like an appropriate time to build an automation to
+Once I got into this rhythm, it felt like an appropriate time to build an automation to
 reduce the number of steps needed
-
 
 ## The Solution
 
