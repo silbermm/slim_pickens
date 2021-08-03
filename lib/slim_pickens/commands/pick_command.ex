@@ -32,7 +32,22 @@ defmodule SlimPickens.Commands.PickCommand do
   def process(%PickCommand{from: from, to: to} = tst) when is_nil(from) or is_nil(to), do: help()
 
   def process(%PickCommand{from: from, to: to}) do
-    :ok
+    path = File.cwd!()
+    display(path)
+    {:ok, pid} = SlimPickens.Git.start_link(path)
+
+    case SlimPickens.Git.checkout(pid, from) do
+      {:ok, _, 0} ->
+        {:ok, commits, _} = SlimPickens.Git.show_commits(pid)
+        _ = select("Choose your commit", commits)
+        :ok
+
+      {:ok, _, n} ->
+        display("Unable to checkout branch", position: :left, color: IO.ANSI.red(), error: true)
+
+      {:error, reason} ->
+        display(reason, color: IO.ANSI.blue(), error: true)
+    end
   end
 
   @spec parse({list(), list(), list()}) :: PickCommand.t()

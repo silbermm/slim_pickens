@@ -5,6 +5,7 @@ defmodule SlimPickens.Application do
 
   @impl Bakeware.Script
   def main(args) do
+    _ = application()
     SlimPickens.CLI.main(args)
   end
 
