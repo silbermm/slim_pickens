@@ -81,7 +81,7 @@ defmodule SlimPickens.Git do
   def handle_call(:cherry_pick, _, %{path: path, commits: commits} = state) do
     try do
       for commit <- commits do
-        {result, exit_code} = System.cmd("git", ["cherry_pick", commit], cd: path)
+        {result, exit_code} = System.cmd("git", ["cherry-pick", commit], cd: path)
 
         if exit_code > 0 do
           raise result
