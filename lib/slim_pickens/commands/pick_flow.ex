@@ -65,9 +65,10 @@ defmodule SlimPickens.Commands.PickFlow do
 
   def cherry_pick(err), do: err
 
-  @spec finish(pid() | :error) :: pid() | ret_error()
+  @spec finish(pid() | :error) :: :ok | ret_error()
   def finish(pid) when is_pid(pid) do
-    {:error, :finish, "Unable to finish up"}
+    display("All done, just push your branch and create a PR", color: IO.ANSI.green())
+    GenServer.stop(pid)
   end
 
   def finish({:error, _, reason}) do
