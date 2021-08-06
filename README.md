@@ -48,6 +48,7 @@ If there is no value there, the tool will show all recent commits. slim also acc
 `git log --author <>`
 
 ## Installation
+1
 TODO
 
 ## Help

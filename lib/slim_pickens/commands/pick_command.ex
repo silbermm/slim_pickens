@@ -1,13 +1,14 @@
 defmodule SlimPickens.Commands.PickCommand do
   @moduledoc """
-    Cherry-picks chosen commits from <from-branchname> to <to-branchname>
+    Cherry-picks chosen commits from <from-branchname> to a new branch with a parent of <to-branchname>
 
-    slim pick <from-branchname> --to <to-branchname>
+    pick <from-branchname> --to <to-branchname>
 
       --help, -h  Print this help message
   """
   alias __MODULE__
   use Prompt.Command
+  import SlimPickens.Commands.PickFlow
 
   @type t :: %PickCommand{
           help: boolean(),
@@ -32,22 +33,15 @@ defmodule SlimPickens.Commands.PickCommand do
   def process(%PickCommand{from: from, to: to} = tst) when is_nil(from) or is_nil(to), do: help()
 
   def process(%PickCommand{from: from, to: to}) do
-    path = File.cwd!()
-    display(path)
-    {:ok, pid} = SlimPickens.Git.start_link(path)
+    {:ok, pid} = SlimPickens.Git.start_link(File.cwd!())
 
-    case SlimPickens.Git.checkout(pid, from) do
-      {:ok, _, 0} ->
-        {:ok, commits, _} = SlimPickens.Git.show_commits(pid)
-        _ = select("Choose your commit", commits)
-        :ok
-
-      {:ok, _, n} ->
-        display("Unable to checkout branch", position: :left, color: IO.ANSI.red(), error: true)
-
-      {:error, reason} ->
-        display(reason, color: IO.ANSI.blue(), error: true)
-    end
+    pid
+    |> checkout(from)
+    |> pick_commits()
+    |> checkout(to)
+    |> create_branch()
+    |> cherry_pick()
+    |> finish()
   end
 
   @spec parse({list(), list(), list()}) :: PickCommand.t()
