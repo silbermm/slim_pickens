@@ -115,7 +115,7 @@ defmodule SlimPickens.Git do
       {result, exit_code} =
         System.cmd(
           "git",
-          ["--no-pager", "log", "-4", "--skip=#{skip}", "--oneline", "--author", username],
+          ["--no-pager", "log", "-6", "--skip=#{skip}", "--oneline", "--author", username],
           cd: path
         )
 
