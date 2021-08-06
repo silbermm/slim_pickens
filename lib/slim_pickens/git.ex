@@ -14,19 +14,31 @@ defmodule SlimPickens.Git do
         {:stop, :nogit}
 
       username ->
-        {:ok, %{path: path, log_skip: 0, username: username}}
+        {:ok, %{path: path, log_skip: 0, username: username, commits: []}}
     end
   end
 
   @spec checkout(pid(), String.t()) :: {:error, any()} | {:ok, String.t(), integer()}
   def checkout(pid, branch), do: GenServer.call(pid, {:checkout, branch})
 
+  @spec pull(pid()) :: {:error, any()} | {:ok, binary(), integer()}
   def pull(pid), do: GenServer.call(pid, :pull)
 
+  @spec show_commits(pid()) :: {:error, any()} | {:ok | :error, String.t(), integer()}
   def show_commits(pid), do: GenServer.call(pid, {:show_commits, :current})
   def show_commits(pid, :next), do: GenServer.call(pid, {:show_commits, :next})
   # TODO
   def show_commits(pid, :previous), do: GenServer.call(pid, {:show_commits, :previous})
+
+  @spec add_commit_hashs(pid(), list(String.t())) :: :ok
+  def add_commit_hashs(pid, hashs), do: GenServer.cast(pid, {:add_commit_hashs, hashs})
+  def add_commit_hashs(pid, hashs), do: GenServer.cast(pid, {:add_commit_hashs, hashs})
+
+  def cherry_pick(pid), do: GenServer.call(pid, :cherry_pick)
+
+  @spec create_branch(pid(), String.t()) ::
+          {:error, any()} | {:ok | :error, String.t(), integer()}
+  def create_branch(pid, branch_name), do: GenServer.call(pid, {:create_branch, branch_name})
 
   defp check_git() do
     case System.find_executable("git") do
@@ -39,6 +51,12 @@ defmodule SlimPickens.Git do
     end
   end
 
+  @doc ""
+  def handle_cast({:add_commit_hashs, hashs}, %{path: path, commits: commits} = state) do
+    hashs = commits ++ hashs
+    {:noreply, %{state | commits: hashs}}
+  end
+
   @impl true
   def handle_call({:checkout, branch}, _, %{path: path} = state) do
     try do
@@ -46,6 +64,34 @@ defmodule SlimPickens.Git do
       {:reply, {:ok, result, exit_code}, state}
     rescue
       e in ArgumentError -> {:reply, {:error, e}, state}
+    end
+  end
+
+  @impl true
+  def handle_call({:create_branch, name}, _, %{path: path} = state) do
+    try do
+      {result, exit_code} = System.cmd("git", ["checkout", "-b", name], cd: path)
+      {:reply, {:ok, result, exit_code}, state}
+    rescue
+      e in ArgumentError -> {:reply, {:error, e}, state}
+    end
+  end
+
+  @impl true
+  def handle_call(:cherry_pick, _, %{path: path, commits: commits} = state) do
+    try do
+      for commit <- commits do
+        {result, exit_code} = System.cmd("git", ["cherry_pick", commit], cd: path)
+
+        if exit_code > 0 do
+          raise result
+        end
+      end
+
+      {:reply, :ok, 0}
+    rescue
+      e in ArgumentError -> {:reply, {:error, e}, state}
+      e -> {:reply, {:error, e}, state}
     end
   end
 
@@ -74,7 +120,7 @@ defmodule SlimPickens.Git do
         )
 
       if exit_code == 0 && result != "" do
-        result = String.split(result, "\n")
+        result = String.split(String.trim(result), "\n")
         {:reply, {:ok, result, exit_code}, state}
       else
         {:reply, {:ok, [], exit_code}, state}

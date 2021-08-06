@@ -38,7 +38,8 @@ defmodule SlimPickens.MixProject do
 
   defp deps do
     [
-      {:prompt, "~> 0.5.10"},
+      # {:prompt, "~> 0.5.10"},
+      {:prompt, path: "../prompt"},
       {:bakeware, "~> 0.2.0", runtime: false},
       {:dialyxir, "~> 1.1", only: [:dev], runtime: false},
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false}
