@@ -24,14 +24,13 @@ defmodule SlimPickens.Git do
   @spec pull(pid()) :: {:error, any()} | {:ok, binary(), integer()}
   def pull(pid), do: GenServer.call(pid, :pull)
 
-  @spec show_commits(pid()) :: {:error, any()} | {:ok | :error, String.t(), integer()}
+  @spec show_commits(pid()) :: {:error, any()} | {:ok | :error, [String.t()], integer()}
   def show_commits(pid), do: GenServer.call(pid, {:show_commits, :current})
   def show_commits(pid, :next), do: GenServer.call(pid, {:show_commits, :next})
   # TODO
   def show_commits(pid, :previous), do: GenServer.call(pid, {:show_commits, :previous})
 
   @spec add_commit_hashs(pid(), list(String.t())) :: :ok
-  def add_commit_hashs(pid, hashs), do: GenServer.cast(pid, {:add_commit_hashs, hashs})
   def add_commit_hashs(pid, hashs), do: GenServer.cast(pid, {:add_commit_hashs, hashs})
 
   def cherry_pick(pid), do: GenServer.call(pid, :cherry_pick)
@@ -157,12 +156,8 @@ defmodule SlimPickens.Git do
 
           new_skip =
             case Enum.count(result) do
-              4 ->
-                skip + 4
-
-              _ ->
-                # TODO somehow indicate that there are no more records to see
-                skip
+              4 -> skip + 4
+              _ -> skip
             end
 
           {:reply, {:ok, result, exit_code}, %{state | log_skip: new_skip}}

@@ -3,7 +3,7 @@ defmodule SlimPickens.Application do
 
   use Bakeware.Script
 
-  @impl Bakeware.Script
+  @impl true
   def main(args) do
     _ = application()
     SlimPickens.CLI.main(args)
