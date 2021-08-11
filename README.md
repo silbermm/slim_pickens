@@ -1,5 +1,8 @@
 # SlimPickens
 
+![robot-3610901_640](https://user-images.githubusercontent.com/42816/128962538-d81101dd-11c1-473b-895d-aad10b4c32f1.png)
+
+
 This is a simple tool that helps with a specific cherry-picking strategy where we need to cherry-pick commits from
 qa -> stage, then stage -> prod (subsitute any branch names you want for those).
 
