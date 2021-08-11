@@ -35,7 +35,7 @@ reduce the number of steps needed
 
 Automate most of this leaving the user to just specifiy the correct branches and commit hashes
 
-[![asciicast](https://asciinema.org/a/14.png)](https://asciinema.org/a/nLszBBjuSWjOzfvZFnKiaDWRh)
+[![asciicast](https://asciinema.org/a/nLszBBjuSWjOzfvZFnKiaDWRh.png)](https://asciinema.org/a/nLszBBjuSWjOzfvZFnKiaDWRh)
 
 By default, the tool only shows the current users commit in the commit logs by using the `user.email` field in the git global config.
 If there is no value there, the tool will show all recent commits.
