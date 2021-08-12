@@ -18,8 +18,8 @@ defmodule SlimPickens.Commands.PickCommand do
   def init(argv) do
     argv
     |> OptionParser.parse(
-      strict: [help: :boolean, to: :string],
-      aliases: [h: :help]
+      strict: [help: :boolean, to: :string, guess: :boolean],
+      aliases: [h: :help, g: :guess]
     )
     |> PickFlow.new()
   end
