@@ -5,15 +5,6 @@ defmodule SlimPickens.Application do
 
   @impl true
   def main(args) do
-    _ = application()
     SlimPickens.CLI.main(args)
-  end
-
-  @impl true
-  def application() do
-    children = []
-
-    opts = [strategy: :one_for_one, name: SlimPickens.Supervisor]
-    Supervisor.start_link(children, opts)
   end
 end
