@@ -94,7 +94,7 @@ defmodule SlimPickens.Git do
       _ ->
         {username, _} = System.cmd("git", ["config", "--global", "--get", "user.name"])
         {branch, _} = System.cmd("git", ["branch", "--show-current"])
-        {username, branch}
+        {String.trim(username), String.trim(branch)}
     end
   end
 end
