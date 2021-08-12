@@ -19,7 +19,6 @@ defmodule SlimPickens.Commands.PickFlow do
   @type error_from :: :checkout | :pick | :create_branch | :cherry_pick | :finish
   @type ret_error :: {:error, error_from(), binary()}
 
-  @spec new({list(), list(), list()}) :: t()
   def new({_opts, [], _}), do: %PickFlow{help: true}
   def new({[help: true], _, _}), do: %PickFlow{help: true}
 
@@ -74,8 +73,7 @@ defmodule SlimPickens.Commands.PickFlow do
 
   @spec create_branch(t() | ret_error()) :: t() | ret_error()
   def create_branch(%PickFlow{git_opts: git_opts, from: from, to: to, guess: true} = cmd) do
-    first_branch = Map.get(git_opts, :branch)
-    new_branch = String.replace_suffix(first_branch, from, "") <> to
+    new_branch = guess_branch_name(from, to, git_opts)
     display("Creating branch #{new_branch}", position: :left, color: IO.ANSI.green())
 
     case SlimPickens.Git.create_branch(new_branch, git_opts) do
@@ -94,6 +92,9 @@ defmodule SlimPickens.Commands.PickFlow do
   end
 
   def create_branch(err), do: err
+
+  defp guess_branch_name(from, to, %{branch: branch}),
+    do: String.replace_suffix(branch, from, "") <> to
 
   @spec cherry_pick(t() | ret_error()) :: t() | ret_error()
   def cherry_pick(%PickFlow{git_opts: git_opts, commits: commits} = cmd) do
