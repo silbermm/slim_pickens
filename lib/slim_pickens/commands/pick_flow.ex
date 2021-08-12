@@ -93,7 +93,7 @@ defmodule SlimPickens.Commands.PickFlow do
     end
   end
 
-  def create_branch(err, _), do: err
+  def create_branch(err), do: err
 
   @spec cherry_pick(t() | ret_error()) :: t() | ret_error()
   def cherry_pick(%PickFlow{git_opts: git_opts, commits: commits} = cmd) do
