@@ -99,7 +99,7 @@ defmodule SlimPickens.Commands.PickFlow do
   def cherry_pick(%PickFlow{git_opts: git_opts, commits: commits} = cmd) do
     display("Cherry-picking chosen commits", position: :left, color: IO.ANSI.green())
 
-    case SlimPickens.Git.cherry_pick(git_opts, commits) do
+    case SlimPickens.Git.cherry_pick(commits, git_opts) do
       :ok -> cmd
       {:error, e} -> {:error, :cherry_pick, e}
     end
