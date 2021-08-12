@@ -28,7 +28,7 @@ defmodule SlimPickens.Commands.PickCommand do
   def process(%PickFlow{help: true}), do: help()
   def process(%PickFlow{from: from, to: to} = tst) when is_nil(from) or is_nil(to), do: help()
 
-  def process(%PickFlow{from: from, to: to, guess: guess} = cmd) do
+  def process(%PickFlow{} = cmd) do
     cmd
     |> checkout(:from)
     |> pick_commits()
