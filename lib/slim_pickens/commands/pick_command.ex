@@ -4,52 +4,37 @@ defmodule SlimPickens.Commands.PickCommand do
 
     pick <from-branchname> --to <to-branchname>
 
+      --guess, -g Make a intermediate branch by making a best guess.
+                  Without this flag, you will be prompted for a branchname
+
       --help, -h  Print this help message
   """
   alias __MODULE__
   use Prompt.Command
+  alias SlimPickens.Commands.PickFlow
   import SlimPickens.Commands.PickFlow
-
-  @type t :: %PickCommand{
-          help: boolean(),
-          to: String.t(),
-          from: String.t()
-        }
-
-  defstruct help: false, to: nil, from: nil
 
   @impl true
   def init(argv) do
     argv
     |> OptionParser.parse(
-      strict: [help: :boolean, to: :string],
-      aliases: [h: :help]
+      strict: [help: :boolean, to: :string, guess: :boolean],
+      aliases: [h: :help, g: :guess]
     )
-    |> parse()
+    |> PickFlow.new()
   end
 
   @impl true
-  def process(%PickCommand{help: true}), do: help()
-  def process(%PickCommand{from: from, to: to} = tst) when is_nil(from) or is_nil(to), do: help()
+  def process(%PickFlow{help: true}), do: help()
+  def process(%PickFlow{from: from, to: to} = tst) when is_nil(from) or is_nil(to), do: help()
 
-  def process(%PickCommand{from: from, to: to}) do
-    {:ok, pid} = SlimPickens.Git.start_link(File.cwd!())
-
-    pid
-    |> checkout(from)
+  def process(%PickFlow{} = cmd) do
+    cmd
+    |> checkout(:from)
     |> pick_commits()
-    |> checkout(to)
+    |> checkout(:to)
     |> create_branch()
     |> cherry_pick()
     |> finish()
-  end
-
-  @spec parse({list(), list(), list()}) :: PickCommand.t()
-  defp parse({_opts, [], _}), do: %PickCommand{help: true}
-  defp parse({[help: true], _, _}), do: %PickCommand{help: true}
-
-  defp parse({opts, [from_branch | _], _}) do
-    to = Keyword.get(opts, :to, nil)
-    %PickCommand{help: false, to: to, from: from_branch}
   end
 end
