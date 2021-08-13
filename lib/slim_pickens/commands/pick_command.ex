@@ -9,9 +9,8 @@ defmodule SlimPickens.Commands.PickCommand do
 
       --help, -h  Print this help message
   """
-  alias __MODULE__
   use Prompt.Command
-  alias SlimPickens.Commands.PickFlow
+  alias SlimPickens.Commands.Picker
   import SlimPickens.Commands.PickFlow
 
   @impl true
@@ -21,14 +20,14 @@ defmodule SlimPickens.Commands.PickCommand do
       strict: [help: :boolean, to: :string, guess: :boolean],
       aliases: [h: :help, g: :guess]
     )
-    |> PickFlow.new()
+    |> Picker.new()
   end
 
   @impl true
-  def process(%PickFlow{help: true}), do: help()
-  def process(%PickFlow{from: from, to: to} = tst) when is_nil(from) or is_nil(to), do: help()
+  def process(%Picker{help: true}), do: help()
+  def process(%Picker{from: from, to: to}) when is_nil(from) or is_nil(to), do: help()
 
-  def process(%PickFlow{} = cmd) do
+  def process(%Picker{} = cmd) do
     cmd
     |> checkout(:from)
     |> pick_commits()
