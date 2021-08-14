@@ -5,9 +5,21 @@ defmodule SlimPickens.Commands.PickFlow do
   alias SlimPickens.Commands.Picker
   import Prompt
 
+  @type t :: %PickFlow{
+          help: boolean(),
+          to: String.t(),
+          from: String.t(),
+          guess: boolean(),
+          git_opts: map(),
+          commits: list(String.t())
+        }
+
+  defstruct help: false, to: nil, from: nil, guess: false, git_opts: %{}, commits: []
+
   @type error_from :: :checkout | :pick | :create_branch | :cherry_pick | :finish
   @type ret_error :: {:error, error_from(), binary()}
 
+ 
   # TODO: Cleanup Error Process
 
   @spec checkout(Picker.t() | ret_error(), :from | :to) :: Picker.t() | ret_error()

@@ -1,5 +1,8 @@
 # SlimPickens
 
+![robot-3610901_640](https://user-images.githubusercontent.com/42816/128962538-d81101dd-11c1-473b-895d-aad10b4c32f1.png)
+
+
 This is a simple tool that helps with a specific cherry-picking strategy where we need to cherry-pick commits from
 qa -> stage, then stage -> prod (subsitute any branch names you want for those).
 
@@ -35,7 +38,7 @@ reduce the number of steps needed
 
 Automate most of this leaving the user to just specifiy the correct branches and commit hashes
 
-[![asciicast](https://asciinema.org/a/14.png)](https://asciinema.org/a/nLszBBjuSWjOzfvZFnKiaDWRh)
+[![asciicast](https://asciinema.org/a/nLszBBjuSWjOzfvZFnKiaDWRh.png)](https://asciinema.org/a/nLszBBjuSWjOzfvZFnKiaDWRh)
 
 By default, the tool only shows the current users commit in the commit logs by using the `user.email` field in the git global config.
 If there is no value there, the tool will show all recent commits.

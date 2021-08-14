@@ -10,6 +10,7 @@ defmodule SlimPickens.Commands.PickCommand do
       --help, -h  Print this help message
   """
   use Prompt.Command
+
   alias SlimPickens.Commands.Picker
   import SlimPickens.Commands.PickFlow
 
