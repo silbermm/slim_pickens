@@ -11,7 +11,7 @@ defmodule SlimPickens.Commands.Picker do
           git_opts: map(),
           commits: list(String.t()),
           error: String.t(),
-          error_code: 0
+          error_type: atom()
         }
 
   defstruct help: false,
@@ -21,7 +21,7 @@ defmodule SlimPickens.Commands.Picker do
             git_opts: %{},
             commits: [],
             error: nil,
-            error_code: 0
+            error_type: nil
 
   def new({_opts, [], _}), do: %Picker{help: true}
   def new({[help: true], _, _}), do: %Picker{help: true}
@@ -35,8 +35,12 @@ defmodule SlimPickens.Commands.Picker do
         %Picker{help: false, to: to, from: from_branch, guess: guess, git_opts: opts}
 
       _err ->
-        %Picker{help: true, error: "Git ins not installed on your system", error_code: -1}
+        %Picker{help: true, error: "Git ins not installed on your system"}
     end
+  end
+
+  def add_error(%Picker{} = picker, type, error) do
+    %Picker{picker | error: error, error_type: type}
   end
 
   def get_branch_name(%Picker{} = picker, :to), do: picker.to
