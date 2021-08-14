@@ -4,7 +4,7 @@ defmodule SlimPickens.MixProject do
   def project do
     [
       app: :slim_pickens,
-      version: "0.1.1-pre",
+      version: "0.1.1",
       elixir: "~> 1.12",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
