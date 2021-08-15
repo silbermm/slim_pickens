@@ -79,7 +79,7 @@ defmodule SlimPickens.Commands.PickFlow do
   end
 
   @spec finish(Picker.t()) :: :ok
-  def finish(%Picker{error: error}) do
+  def finish(%Picker{error: error}) when not is_nil(error) do
     display("ERROR: #{inspect(error)}", position: :left, color: IO.ANSI.red())
   end
 
