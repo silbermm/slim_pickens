@@ -13,7 +13,8 @@ defmodule SlimPickens.MixProject do
       releases: [
         slim: [
           steps: [:assemble, &Bakeware.assemble/1],
-          strip_beams: [keep: ["Docs"]]
+          strip_beams: [keep: ["Docs"]],
+          bakeware: [compression_level: 19]
         ]
       ]
     ]
