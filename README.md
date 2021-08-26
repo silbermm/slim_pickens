@@ -67,7 +67,7 @@ find the download on your local machine:
     
 4.  Try out a Slim command:
     ```bash
-    ./sim_darwin --help
+    ./slim_darwin --help
     ```
     <em>If you receive an error that macOS cannot verify the developer, open slim_picken in finder holding down the `option` button. You'll get a prompt to click `open`.</em>
 
