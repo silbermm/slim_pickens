@@ -25,4 +25,7 @@ slim_pickens-*.tar
 # Temporary files, for example, from tests.
 /tmp/
 
+# Jetbrains IDEs
+.idea/
+
 slim.yml

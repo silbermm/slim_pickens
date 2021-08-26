@@ -27,7 +27,7 @@ defmodule SlimPickens.Commands.PickFlow do
   def pick_commits(%Picker{git_opts: git_opts} = cmd) do
     case Git.show_commits(git_opts) do
       {:ok, res, 0} ->
-        res = select("Choose commits in order seperated by spaces", res, multi: true)
+        res = select("Choose commits in order separated by spaces", res, multi: true)
         res = Enum.map(res, &List.first(String.split(&1)))
         Picker.add_commits(cmd, res)
 
