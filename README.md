@@ -71,7 +71,7 @@ find the download on your local machine:
     ```
     <em>If you receive an error that macOS cannot verify the developer, open slim_picken in finder holding down the `option` button. You'll get a prompt to click `open`.</em>
 
-5.  Copy this file to your user directory so that you can use slim commands outside of Downloads directory: 
+5.  Copy this file to your PATH so that you can use slim commands outside of Downloads directory: 
     ```bash
     sudo cp slim_darwin /usr/local/bin/slim
     ```
