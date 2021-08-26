@@ -46,6 +46,46 @@ If there is no value there, the tool will show all recent commits.
 ## Installation
 [Download the latest release for your OS](https://github.com/silbermm/slim_pickens/releases) in the Assests section (currently only Mac and Linux x64 are supported) and put the binary somewhere in your path. For example, on an Arch distro, I put it in `/usr/local/bin`.
 
+## Step-by-step Installation & Setup For Mac
+1.  Once you've downloaded the [latest release for your OS](https://github.com/silbermm/slim_pickens/releases),
+find the download on your local machine:  
+    ```bash
+    cd Downloads
+    ```
+
+2.  Make the file executable:
+    ```bash
+    chmod +x slim_darwin
+    ```
+    <em>If this doesn’t work for you, check that your terminal is listed as an app for “Full Disk Access” under Security & Privacy.</em>
+
+
+3.  Confirm the file is executable: 
+    ```bash
+    ls -l slim_darwin
+    ```
+    
+4.  Try out a Slim command:
+    ```bash
+    ./sim_darwin --help
+    ```
+    <em>If you receive an error that macOS cannot verify the developer, open slim_picken in finder holding down the `option` button. You'll get a prompt to click `open`.
+
+5.  Copy this file to your user directory so that you can use slim commands outside of Downloads directory: 
+    ```bash
+    sudo cp slim_darwin /usr/local/bin/slim
+    ```
+6.  cd out of downloads and into a project:
+    ```bash
+    cd ../YOUR_PROJECT_NAME
+    ```
+7. confirm Slim works outside of downloads:
+    ```bash
+    slim
+    ```
+
+You have successfully set up Slim!
+
 ## Usage
 
 Use
