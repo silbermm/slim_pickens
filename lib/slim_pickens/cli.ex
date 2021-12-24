@@ -10,7 +10,6 @@ defmodule SlimPickens.CLI do
   use Prompt, otp_app: :slim_pickens
 
   def main(argv) do
-    commands = [{"pick", SlimPickens.Commands.PickCommand}]
-    process(argv, commands)
+    process(argv, pick: SlimPickens.Commands.PickCommand)
   end
 end

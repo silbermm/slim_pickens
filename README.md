@@ -1,4 +1,4 @@
-# SlimPickens
+# Slim
 
 ![robot-3610901_640](https://user-images.githubusercontent.com/42816/128962538-d81101dd-11c1-473b-895d-aad10b4c32f1.png)
 
@@ -48,7 +48,7 @@ If there is no value there, the tool will show all recent commits.
 
 ## Step-by-step Installation & Setup For Mac
 1.  Once you've downloaded the [latest release for your OS](https://github.com/silbermm/slim_pickens/releases),
-find the download on your local machine:  
+find the download on your local machine:
     ```bash
     cd Downloads
     ```
@@ -60,18 +60,18 @@ find the download on your local machine:
     <em>If this doesn’t work for you, check that your terminal is listed as an app for “Full Disk Access” under Security & Privacy.</em>
 
 
-3.  Confirm the file is executable: 
+3.  Confirm the file is executable:
     ```bash
     ls -l slim_darwin
     ```
-    
+
 4.  Try out a Slim command:
     ```bash
     ./slim_darwin --help
     ```
     <em>If you receive an error that macOS cannot verify the developer, open slim_picken in finder holding down the `option` button. You'll get a prompt to click `open`.</em>
 
-5.  Copy this file to your PATH so that you can use slim commands outside of Downloads directory: 
+5.  Copy this file to your PATH so that you can use slim commands outside of Downloads directory:
     ```bash
     sudo cp slim_darwin /usr/local/bin/slim
     ```
