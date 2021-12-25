@@ -40,6 +40,8 @@ Automate most of this leaving the user to just specifiy the correct branches and
 
 [![asciicast](https://asciinema.org/a/nLszBBjuSWjOzfvZFnKiaDWRh.png)](https://asciinema.org/a/nLszBBjuSWjOzfvZFnKiaDWRh)
 
+<script id="asciicast-429934" src="https://asciinema.org/a/429934.js" async></script>
+
 By default, the tool only shows the current users commit in the commit logs by using the `user.email` field in the git global config.
 If there is no value there, the tool will show all recent commits.
 
